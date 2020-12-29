@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd")
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.crazy.demo"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0.0"
+        flavorDimensions "versionCode"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("keystore/bourse.jks")
+            storePassword "xrfg123456"
+            keyAlias "xrfg"
+            keyPassword "xrfg123456"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    productFlavors {
+        prod {
+            applicationId "com.crazy.demo"
+            resValue "string", "app_name", "KotlinDemo"
+            buildConfigField "String", "BASE_URL", '"https://"'
+        }
+        dev {
+            applicationId "com.crazy.demo.dev"
+            resValue "string", "app_name", "KotlinDemo开发版"
+            buildConfigField "String", "BASE_URL", '"https://"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            // 输出apk名称为ZD_1.0_2018-08-13.apk
+            def fileName = "KotlinDemo_${versionName}_${variant.productFlavors[0].name}_${variant.buildType.name}_${releaseTime()}.apk"
+            outputFileName = fileName
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation project(path: ':kotlin_mvvm')
+    implementation 'com.sunfusheng:MarqueeView:1.4.1'
+
+}

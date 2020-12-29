@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.crazy.demo.ui.home.viewModel.HomeViewModel" />
+
+        <variable
+            name="clickListener"
+            type="com.crazy.kotlin_mvvm.listener.OnMyClickListener" />
+
+    </data>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/main_home"
+        android:gravity="center"/>
+
+</layout>
