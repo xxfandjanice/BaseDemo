@@ -98,3 +98,15 @@ fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
     }, { false })
 }
 
+//防误点
+private var lastClickTime: Long = 0
+@Synchronized
+fun isFastClick(): Boolean {
+    val time = System.currentTimeMillis()
+    if (time - lastClickTime < 300) {
+        return true
+    }
+    lastClickTime = time
+    return false
+}
+
