@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.crazy.kotlin_mvvm.base.BaseViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+
+    </LinearLayout>
+
+</layout>

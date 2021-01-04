@@ -79,6 +79,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : AppCompat
         initView()
         //初始化数据
         initData()
+
+        setWhiteStatusBar()
     }
 
 
@@ -116,6 +118,14 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : AppCompat
         }
     }
 
+    //设置白底黑字模式
+    open fun setWhiteStatusBar() {
+        if (useWhiteStatusBar()) {
+            StatusBarUtils.setColor(this, resources.getColor(R.color.white))
+            StatusBarUtils.statusBarDarkLightMode(this, isDark = true, isFullscreen = false)
+        }
+    }
+
 
     /**
      * 默认不使用 EventBus
@@ -123,6 +133,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : AppCompat
     open fun useEventBus() = false
 
     open fun useToolBar() = true
+
+    open fun useWhiteStatusBar() = true
 
     abstract fun getLayoutResId(): Int
 

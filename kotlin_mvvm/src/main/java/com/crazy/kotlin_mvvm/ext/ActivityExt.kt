@@ -56,6 +56,20 @@ inline fun <reified T : Activity> Context.startKtxActivity(
     startActivity(getIntent<T>(flags, extra, list))
 }
 
+inline fun <reified T : Activity> Activity.startKtxActivityAndFinish(
+    flags: Int? = null,
+    extra: Bundle? = null,
+    value: Pair<String, Any>? = null,
+    values: Collection<Pair<String, Any>?>? = null
+) {
+
+    val list = ArrayList<Pair<String, Any>?>()
+    value?.let { list.add(it) }
+    values?.let { list.addAll(it) }
+    startActivity(getIntent<T>(flags, extra, list))
+    finish()
+}
+
 inline fun <reified T : Activity> Activity.startKtxActivityForResult(
     requestCode: Int,
     flags: Int? = null,
